@@ -1,0 +1,74 @@
+package com.example.instagramclone
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_down_host.*
+
+class DownHostFragment : Fragment() {
+    lateinit var root:View
+    lateinit var list: MutableList<Post>
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        loadProfilePictures()
+        root = inflater.inflate(R.layout.fragment_down_host, container, false)
+
+        val myRecycleView = root.findViewById<RecyclerView>(R.id.picturesRC)
+
+        myRecycleView.adapter = ProfilePicturesRCAdapter(root.context, list, parentFragmentManager)
+
+        return root
+    }
+
+
+    private fun loadProfilePictures() {
+        list = mutableListOf()
+        val comments1 = mutableListOf<Post.Comments>(Post().Comments("Sanjar Suvonov", "Good Job!", R.drawable.pict, 9), Post().Comments("Shamsiddin Komilov", "Yeap", R.drawable.pict, 15))
+        val item1 = Post("https://wallpapercave.com/wp/wp2665203.jpg", 95, comments1, "Natural Beauty", false, false, R.drawable.pict, "Apulatjonov")
+        list.add(item1)
+        val comments2 = mutableListOf<Post.Comments>(Post().Comments("Odil Qayumov", "Where is that?"), Post().Comments("Shamsiddin Komilov", "I would love to go to there!"))
+        val item2 = Post("https://cdn.wallpapersafari.com/86/17/IS3Tct.jpg", 56, comments2, "The Bridge", false, false)
+        list.add(item2)
+        val comments3 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item3 = Post("https://www.pixelstalk.net/wp-content/uploads/2016/08/Beautiful-Wallpapers-Images.jpg", 12, comments3, "Just", false, false)
+        list.add(item3)
+        val comments4= mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item4 = Post("data:image/jpeg;base64,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", 12, comments4, "Just", false, false)
+        list.add(item4)
+        val comments5 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item5 = Post("https://cdn.pixabay.com/photo/2020/04/11/08/26/nature-5029360_1280.jpg", 17, comments5, "Just", false, false)
+        list.add(item5)
+        val comments6 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item6 = Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQK49V41-sUSYVfDTFIZpLso1M8YR686lQ4cMsXzeFw21J2fTo086gvy7lWUiljwCF2P-Y&usqp=CAU", 76, comments6, "Just", false, false)
+        list.add(item6)
+        val comments7 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item7 = Post("https://worlds-exotic-beaches.com/wp-content/uploads/2021/05/top-5-beaches-in-Iceland.jpg", 65, comments7, "Just", false, false)
+        list.add(item7)
+        val comments8 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item8 = Post("https://www.admethics.com/wp-content/uploads/2020/04/mindlake.jpg", 105, comments3, "Just", false, false)
+        list.add(item8)
+        val comments9 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item9 = Post("https://images.dailyhive.com/20200721095816/DH-RockiesLakes.jpg", 72, comments3, "Just", false, false)
+        list.add(item9)
+        val comments10 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item10 = Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRksfVc2UZqOVF86Kb1S5RvNb98dhnbww12XazYlBEDKslG6ijdBiQsQMHa4zjEilaIun0&usqp=CAU", 1005, comments3, "Just", false, false)
+        list.add(item10)
+        val comment11 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item11 = Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcdaX9s71tPj1gkDxwmwQhSlogydi6MR4Cx8sIgZNRW-8NDL4TuMop6vi8m-_d6Dxvcqs&usqp=CAU", 12, comments3, "Just", false, false)
+        list.add(item11)
+        val comments12 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item12 = Post("https://i.pinimg.com/originals/c8/a4/9c/c8a49c6babe79c2efd4a6963c931df3e.jpg", 12, comments3, "Just", false, false)
+        list.add(item12)
+        val comments13 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item13 = Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyWvxHnBbDSQS84vp17xvYPbygzF1iXFen2-vTmQRC46mq_OBZx5Hxe-OezSZP5Vr8xpk&usqp=CAU", 1065, comments3, "Just", false, false)
+        list.add(item13)
+        val comments14 = mutableListOf<Post.Comments>(Post().Comments("PDP", "whata beautiful place!"))
+        val item14 = Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8JYRjSHzA3sTx5d8JdYDQ4Rm7ebNkoslWQdO5fbxcf92qGg3QwW-9jmCA-D7Y0yHM738&usqp=CAU", 212, comments3, "Just", false, false)
+        list.add(item14)
+    }
+}
